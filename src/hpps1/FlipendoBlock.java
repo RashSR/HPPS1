@@ -335,9 +335,9 @@ public class FlipendoBlock extends EZPlugin implements Spellable{
 	}
 	//Kommt aus Interface Spellable und beschreibt was passiert wenn Flipendoblock von Zauber getroffen wird
 	@Override
-	public void hitBySpell(Spell spell, Player player){
+	public void hitBySpell(Spell spell, Spieler spieler){
 		if(spell==Spell.FLIPENDO || spell==Spell.DOUBLEFLIPENDO){
-			this.moveBlock(player);
+			this.moveBlock(spieler.getPlayer());
 		}else {
 			logger.info("Wrong Spell!");
 			//TODO: PlaySoundEffect

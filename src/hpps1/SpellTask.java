@@ -10,7 +10,6 @@ import net.canarymod.api.world.blocks.Block;
 import net.canarymod.api.world.blocks.BlockType;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.api.world.effects.Particle;
-import net.canarymod.api.entity.living.humanoid.Player;
 //Diese Klasse ermöglicht es den Zauber verzögert auszuführen
 public class SpellTask extends ServerTask{
 	private final EZPlugin plugin;
@@ -47,7 +46,7 @@ public class SpellTask extends ServerTask{
         	if(b.getType() != BlockType.Air){
           		FlipendoBlock fB = Spieler.checkIfFlipendoBlock(blockLoc); //TODO: Zeile passt noch nicht evtl alle Blöcke checken?
           		if(fB!=null){ //TODO: hier mit || andere Sachen Checken 
-          			fB.hitBySpell(spell, spieler.getPlayer());
+          			fB.hitBySpell(spell, spieler);
           			spieler.setIsSpellActive(true);
           		}
           		spieler.setIsSpellActive(true);
