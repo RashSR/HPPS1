@@ -44,12 +44,17 @@ public class FlipendoBlock extends EZPlugin implements Spellable{
 	}
 	//Methode die ArrayList<Location>(2 Einträge) aus ArrayList<Location>(Beliebig lang, ganzzahlig teilbar durch 2) erstellt
 	private static ArrayList<Location> get2outOfMany(ArrayList<Location> many, int position){
+		if(many.size()%2!=0){
+			logger.info("Uebergebenes Array enthält ein Element zu viel bzw. zu wenig.");
+			return null;
+		}
 		if(position <= many.size()/2 && position > 0){
 			ArrayList<Location> rA = new ArrayList<>();
 			rA.add(many.get(position*2-2));
 			rA.add(many.get(position*2-1));
 			return rA;
 		} else{
+			logger.info("Fehler bei get2outOfMany.");
 			return null;
 		}
 	}
