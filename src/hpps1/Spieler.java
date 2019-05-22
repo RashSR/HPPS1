@@ -25,7 +25,7 @@ public class Spieler extends EZPlugin implements PluginListener{
 	private boolean haveSaveState;
 	private SaveStates ss;
 	private int housePoints; //Anzahl der gesammelten Punkte
-	private HogwartsHouse hogwartsHouse; //welchem Haus in Hogwarts Spieler zugeteilt ist
+	private HogwartsHouse hogwartsHouse=HogwartsHouse.RAVENCLAW; //welchem Haus in Hogwarts Spieler zugeteilt ist
 	//Spells
 	private boolean gotFlipendo=true;
 	private boolean gotWingardiumLeviosa;
@@ -122,7 +122,7 @@ public class Spieler extends EZPlugin implements PluginListener{
   			this.isSpellActive=false;
   			Particle.Type pT=null;
   			Spell spell = null;
-  			if(FlipendoBlock.fBlocks != null){
+  			if(FlipendoBlock.fBlocks != null || Cobweb.allCobWebs != null){
   				if(event.getItem().getType() == ItemType.Stick){
   					spell = Spell.FLIPENDO;
   					pT = Particle.Type.FIREWORKS_SPARK;
@@ -133,18 +133,6 @@ public class Spieler extends EZPlugin implements PluginListener{
   			}
   			Canary.getServer().addSynchronousTask(new SpellTask(this, this, pT, spell));
     	}
-  	}
-
-  	//Überprüft ob getroffener Block ein FlipendoBlock ist und gibt diesen zurück
-	protected static FlipendoBlock checkIfFlipendoBlock(Location loc){
-  		for(FlipendoBlock fB : FlipendoBlock.fBlocks){
-  			for(Location loc1 : fB.getContainedBlocks()){
-  				if(locEqual(loc, loc1)){
-  					return fB;
-  				}
-  			}
-  		}
-  		return null;
   	}
   	//Speichert Spielstand
 	protected void saveSaveState(boolean locsave){

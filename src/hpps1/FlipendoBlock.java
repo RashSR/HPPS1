@@ -59,6 +59,17 @@ public class FlipendoBlock extends EZPlugin implements Spellable{
 		}
 	}
 
+	protected static FlipendoBlock checkIfFlipendoBlock(Location loc){
+  		for(FlipendoBlock fB : fBlocks){
+  			for(Location loc1 : fB.getContainedBlocks()){
+  				if(locEqual(loc, loc1)){
+  					return fB;
+  				}
+  			}
+  		}
+  		return null;
+  	}
+
 	//Überprüft aus File ob es ein gültiger FlipendoBlock ist
 	private static boolean isFb(ArrayList<Location> containedBlocks){
 		ArrayList<Location> lowestLs=new ArrayList<>();

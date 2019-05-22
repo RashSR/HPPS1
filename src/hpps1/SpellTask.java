@@ -44,10 +44,13 @@ public class SpellTask extends ServerTask{
         	EZPlugin.spawnParticle(blockLoc, pT);
         	//TODO: Soundeffect einfügen!  
         	if(b.getType() != BlockType.Air){
-          		FlipendoBlock fB = Spieler.checkIfFlipendoBlock(blockLoc); //TODO: Zeile passt noch nicht evtl alle Blöcke checken?
-          		if(fB!=null){ //TODO: hier mit || andere Sachen Checken 
+          		FlipendoBlock fB = FlipendoBlock.checkIfFlipendoBlock(blockLoc);
+          		Cobweb cB = Cobweb.checkIfCobWeb(blockLoc);
+          		if(fB!=null){ 
           			fB.hitBySpell(spell, spieler);
-          			spieler.setIsSpellActive(true);
+          		} else if(cB!=null){
+          			cB.hitBySpell(spell, spieler);
+          			//TODO: Soundeffekt hinzufügen
           		}
           		spieler.setIsSpellActive(true);
           		Canary.getServer().removeSynchronousTask(this);
