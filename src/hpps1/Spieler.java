@@ -13,9 +13,7 @@ import net.canarymod.api.world.position.Location;
 import net.canarymod.api.world.effects.SoundEffect;
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.api.world.blocks.BlockType;
-import net.canarymod.BlockIterator;
 import net.canarymod.api.world.effects.Particle.Type;
-import net.canarymod.LineTracer;
 import net.canarymod.api.world.effects.Particle;
 
 public class Spieler extends EZPlugin implements PluginListener{
@@ -33,6 +31,7 @@ public class Spieler extends EZPlugin implements PluginListener{
 	private boolean gotVerdimellious;
 	private boolean gotAvifors;
 	private boolean gotDoubleFlipendo; //für alle roten Bohnen
+	private boolean isSpellActive=true; //falls spieler gerade gezaubert hat kann er nicht spammen true=zaubern möglich 
 	//Beans
 	private int yellowBeans; //max 50
 	private int redBeans;    //max 100
@@ -60,6 +59,10 @@ public class Spieler extends EZPlugin implements PluginListener{
 		logger.info("Der Spieler "+player.getDisplayName()+" wurde angelegt.");
 		enable();
 	}
+	protected void setIsSpellActive(boolean bool){
+		this.isSpellActive=bool;
+	}
+
 	//Falls Karte noch nicht gefunden wurde, wird bool auf true gesetzt und gespeichert
 	protected void foundCard(int secretRoom){
 		if(secretRoom > 0 && secretRoom < maxCards){
@@ -90,36 +93,25 @@ public class Spieler extends EZPlugin implements PluginListener{
 	//Lässt den Spieler per Rechtsklick auf spezifisches Item "zaubern"
 	@HookHandler
   	public void castSpell(ItemUseHook event){
-  		if(this.gotFlipendo){
-  			Particle.Type p=null;
+  		if(this.gotFlipendo&&this.isSpellActive){
+  			this.isSpellActive=false;
+  			Particle.Type pT=null;
   			Spell spell = null;
   			if(FlipendoBlock.fBlocks != null){
   				if(event.getItem().getType() == ItemType.Stick){
   					spell = Spell.FLIPENDO;
-  					p = Particle.Type.FIREWORKS_SPARK;
+  					pT = Particle.Type.FIREWORKS_SPARK;
   				} //TODO: hier über else if weitere spell und partikel setzen
   			}else {
   				logger.info("Noch keine FlipendoBlocks vorhanden.");
+  				return;
   			}
-  			BlockIterator sightItr = new BlockIterator(new LineTracer(player), true);
-  			while(sightItr.hasNext()){
-        		Block b = sightItr.next();
-        		Location blockLoc = b.getLocation();
-        		spawnParticle(blockLoc, p);
-        		//TODO: Soundeffect einfügen!  
-        		if(b.getType() != BlockType.Air){
-          			FlipendoBlock fB = checkIfFlipendoBlock(blockLoc); //TODO: Zeile passt noch nicht evtl alle Blöcke checken?
-          			if(fB!=null){ //TODO: hier mit || andere Sachen Checken 
-          				fB.hitBySpell(spell, player);
-          			}
-          			break;
-        		}
-    		}
+  			Canary.getServer().addSynchronousTask(new SpellTask(this, this, pT, spell));
     	}
   	}
 
   	//Überprüft ob getroffener Block ein FlipendoBlock ist und gibt diesen zurück
-	protected FlipendoBlock checkIfFlipendoBlock(Location loc){
+	protected static FlipendoBlock checkIfFlipendoBlock(Location loc){
   		for(FlipendoBlock fB : FlipendoBlock.fBlocks){
   			for(Location loc1 : fB.getContainedBlocks()){
   				if(locEqual(loc, loc1)){
