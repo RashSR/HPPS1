@@ -24,6 +24,8 @@ public class Spieler extends EZPlugin implements PluginListener{
 	private HashMap<String, Object> search;
 	private boolean haveSaveState;
 	private SaveStates ss;
+	private int housePoints; //Anzahl der gesammelten Punkte
+	private HogwartsHouse hogwartsHouse; //welchem Haus in Hogwarts Spieler zugeteilt ist
 	//Spells
 	private boolean gotFlipendo=true;
 	private boolean gotWingardiumLeviosa;
@@ -81,6 +83,29 @@ public class Spieler extends EZPlugin implements PluginListener{
         	}
     	}
     	return cards;
+  	}
+
+  	protected void setHogwartsHouse(HogwartsHouse hogwartsHouse){
+  		this.hogwartsHouse=hogwartsHouse;
+  	}
+
+  	protected HogwartsHouse getHogwartsHouse(){
+  		if(this.hogwartsHouse!=null){
+  			return this.hogwartsHouse;
+  		}else {
+  			logger.info("Der Spieler hat noch kein Haus gewaehlt");
+  			return null;
+  		}
+  	}
+
+  	protected int getHousePoints(){
+  		return this.housePoints;
+  	}
+
+  	protected void changeHousePoints(int amount){
+  		this.housePoints=this.housePoints+amount;
+  		logger.info("Der Spieler "+getPlayer().getDisplayName()+" erhaelt "+amount+" Hauspunkte und das Haus "+this.hogwartsHouse.getHogwartsHouse()+" hat jetzt "+this.housePoints+" Hauspunkte.");
+  		//Noch nicht getestet
   	}
 
 	protected boolean getHaveSaveState(){
