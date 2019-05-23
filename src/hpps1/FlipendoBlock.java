@@ -290,54 +290,7 @@ public class FlipendoBlock extends EZPlugin implements Spellable{
 		}
 		return lowestLocations;
 	}
-	//Erstellt eine ArrayList<Location> aus einer ArrayList<Location>(mit nur zwei Einträgen) mit allen dazwischenliegenden Location's
-	private static ArrayList<Location> makeLocList(ArrayList<Location> startBlocks){
-		if(startBlocks.size() != 2){
-			logger.info("Nur 2 Parameter für makeLocList!");
-			return null;
-		}
-		ArrayList<Location> blocksBetween=new ArrayList<>();
-		int xmax, ymax, zmax, xmin, ymin, zmin;
-		int x1, x2, y1, y2, z1, z2;
-		Location loc1 = startBlocks.get(0);
-		Location loc2 = startBlocks.get(1);
-		x1=(int)loc1.getX();
-		y1=(int)loc1.getY();
-		z1=(int)loc1.getZ();
-		x2=(int)loc2.getX();
-		y2=(int)loc2.getY();
-		z2=(int)loc2.getZ();
-		if(x1 > x2){
-			xmax = x1;
-      		xmin = x2;
-        }else{
-      		xmax = x2;
-      		xmin = x1;
-        }
-    	if(y1 > y2){
-      		ymax = y1;
-      		ymin = y2;
-        }else{
-      		ymax = y2;
-      		ymin = y1;
-        }
-    	if(z1 > z2){
-      		zmax = z1; 
-      		zmin = z2;
-        }else{
-      		zmax = z2;
-      		zmin = z1;
-        }
-    	for(int x = xmin; x <= xmax; x++){
-      		for(int y = ymin; y <= ymax; y++){
-        		for(int z = zmin; z <= zmax; z++){
-          			Location locs = new Location(x, y, z);
-          			blocksBetween.add(locs);
-        		}
-      		}
-    	}
-    	return blocksBetween;
-	}
+
 	//Füllt das Klassenattribut containedBlocks(ArrayList<Location>)
 	private void initBlock(){
 	   	for(Location loc : this.containedBlocks){

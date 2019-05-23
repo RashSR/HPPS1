@@ -17,9 +17,14 @@ public class Cobweb extends EZPlugin implements Spellable{
 	protected static void initCobWebs(){
 		allCobWebs = new ArrayList<>();
 		ArrayList<Location> cB = new ArrayList<>();
-		cB.add(new Location(-337, 79, 311));
-		cB.add(new Location(-338, 79, 311));
-		cB.add(new Location(-338, 79, 310));
+		cB.add(new Location(-337, 80, 319));
+		cB.add(new Location(-338, 79, 321));
+		cB=makeLocList(cB);
+		cB.add(new Location(-337, 81, 320));
+		cB.add(new Location(-338, 81, 319));
+		cB.add(new Location(-338, 81, 321));
+		cB.add(new Location(-338, 81, 320));
+		cB.add(new Location(-338, 82, 320));
 		allCobWebs.add(new Cobweb(cB));
 		for(Cobweb c : allCobWebs){
 			c.changeWebs(BlockType.SpiderWeb);
