@@ -46,12 +46,15 @@ public class SpellTask extends ServerTask{
         	if(b.getType() != BlockType.Air){
           		FlipendoBlock fB = FlipendoBlock.checkIfFlipendoBlock(blockLoc);
           		Cobweb cB = Cobweb.checkIfCobWeb(blockLoc);
+              Snail sN = Snail.checkIfSnail(blockLoc);
           		if(fB!=null){ 
           			fB.getHitBySpell(spell, spieler);
           		} else if(cB!=null){
           			cB.getHitBySpell(spell, spieler);
           			//TODO: Soundeffekt hinzufügen
-          		}
+          		}else if(sN!=null){
+                sN.getHitBySpell(spell, spieler);
+              }
           		spieler.setIsSpellActive(true);
           		Canary.getServer().removeSynchronousTask(this);
         	}

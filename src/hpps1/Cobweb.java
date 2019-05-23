@@ -29,6 +29,7 @@ public class Cobweb extends EZPlugin implements Spellable{
 		for(Cobweb c : allCobWebs){
 			c.changeWebs(BlockType.SpiderWeb);
 		}
+		logger.info("Initialisiere Cobwebs.");
 
 	}
 	private ArrayList<Location> getContainedLocs(){

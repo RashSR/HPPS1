@@ -24,7 +24,6 @@ public class FlipendoBlock extends EZPlugin implements Spellable{
 	//Initialisiert die FlipendoBlocks und zeichnet sie in die Spielwelt
 	protected static void initFlipendoBlocks(){
 		fBlocks = new ArrayList<>();
-		logger.info("Neue Flipendoblockliste erstellt.");
 		ArrayList<Location> f1 = new ArrayList<>();
   		f1.add(new Location(-333, 77, 316));
   		f1.add(new Location(-332, 76, 317));
@@ -41,6 +40,7 @@ public class FlipendoBlock extends EZPlugin implements Spellable{
   			fB.clear();
   			fB.initBlock();
   		}
+  		logger.info("Initialisiere FlipendoBlocks.");
 	}
 	//Methode die ArrayList<Location>(2 Einträge) aus ArrayList<Location>(Beliebig lang, ganzzahlig teilbar durch 2) erstellt
 	private static ArrayList<Location> get2outOfMany(ArrayList<Location> many, int position){
@@ -98,7 +98,6 @@ public class FlipendoBlock extends EZPlugin implements Spellable{
 			}
 			if(this.isFlipendoBlock(this.containedBlocks)){
 				this.yHeight=yHeight;
-				logger.info("Erstellt einen FlipendoBlock mit der Hoehe: "+yHeight);
 				makePath();
 			} else {
 				wrongLocationLogMessage();

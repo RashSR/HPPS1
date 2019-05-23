@@ -58,6 +58,7 @@ public class HPPS1 extends EZPlugin implements PluginListener {
 			thisSetPlayer(player);
 			FlipendoBlock.initFlipendoBlocks();
 			Cobweb.initCobWebs();
+			Snail.initSnails();
 			if(sp.loadSaveState(true)){
 				posX = sp.getPlayer().getX();
 				posY = sp.getPlayer().getY();
