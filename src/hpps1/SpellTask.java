@@ -47,9 +47,9 @@ public class SpellTask extends ServerTask{
           		FlipendoBlock fB = FlipendoBlock.checkIfFlipendoBlock(blockLoc);
           		Cobweb cB = Cobweb.checkIfCobWeb(blockLoc);
           		if(fB!=null){ 
-          			fB.hitBySpell(spell, spieler);
+          			fB.getHitBySpell(spell, spieler);
           		} else if(cB!=null){
-          			cB.hitBySpell(spell, spieler);
+          			cB.getHitBySpell(spell, spieler);
           			//TODO: Soundeffekt hinzufügen
           		}
           		spieler.setIsSpellActive(true);

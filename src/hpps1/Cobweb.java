@@ -53,7 +53,7 @@ public class Cobweb extends EZPlugin implements Spellable{
 	}
 
 	@Override
-	public void hitBySpell(Spell spell, Spieler spieler){
+	public void getHitBySpell(Spell spell, Spieler spieler){
 		this.changeWebs(BlockType.Air);
 		spieler.changeHousePoints(HOUSEPOINTS);
 	}
