@@ -82,7 +82,7 @@ public class HPPS1 extends EZPlugin implements PluginListener {
     		Player player = (Player)caller;
     		thisSetPlayer(player);
 			Canary.instance().getServer().broadcastMessage(ChatFormat.DARK_AQUA+msg1+ChatFormat.DARK_GREEN+"Speicherstand von "+ChatFormat.BLUE+player.getDisplayName()+ChatFormat.DARK_GREEN + ":");
-    		Canary.instance().getServer().broadcastMessage(ChatFormat.DARK_GREEN+" - Karten gefunden: "+ChatFormat.GOLD+sp.getCards()+ChatFormat.DARK_GREEN+"/"+Spieler.maxCards+"\n");	
+    		Canary.instance().getServer().broadcastMessage(ChatFormat.DARK_GREEN+" - Karten gefunden: "+ChatFormat.GOLD+sp.getCards()+ChatFormat.DARK_GREEN+"/"+Spieler.maxCards+"\n");	//Haus anzeigen und in Spielerklasse auslagern
 		}
  	}
 

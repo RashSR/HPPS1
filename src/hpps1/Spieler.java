@@ -195,7 +195,7 @@ public class Spieler extends EZPlugin implements PluginListener{
 	}
 	//Zeigt Zauberkarten an, falls das Buch im Gemeinschaftsraum geklickt wird
 	@HookHandler
-  	private void clickCardBook(BlockRightClickHook event){
+  	public void clickCardBook(BlockRightClickHook event){
   		Block cB = event.getBlockClicked();
   		if(cB.getX()==-344&&cB.getY()==68&&cB.getZ()==306){
   			showCards();
@@ -203,14 +203,14 @@ public class Spieler extends EZPlugin implements PluginListener{
   	}
   	//Unterbindet Itemverschiebung im ZauberkartenInventory
   	@HookHandler
- 	private void itemklick(SlotClickHook event){
+ 	public void itemklick(SlotClickHook event){
     	if(isInInventory){
      		event.setCanceled();
     	}
   	}
   	//Sobald ZauberkartenInventory geschlossen wird, kann man wieder Items verschieben im normalen Inventory
   	@HookHandler
-  	private void closeinv(InventoryHook event){
+  	public void closeinv(InventoryHook event){
     	if(isInInventory){
       		if(event.isClosing()){
         	isInInventory = false;

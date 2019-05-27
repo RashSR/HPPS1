@@ -50,8 +50,8 @@ public class Snail extends Enemy{
 		} else if(spell == Spell.DOUBLEFLIPENDO){
 			this.setHealth(this.getHealth()-this.getDamageTake()*2);
 		}
-		if(this.getHealth()<0){
-			spieler.changeHousePoints(5);
+		if(this.getHealth()<=0){
+			spieler.changeHousePoints(5); 
 		}
 	}
 	protected static Snail checkIfSnail(Location loc){
