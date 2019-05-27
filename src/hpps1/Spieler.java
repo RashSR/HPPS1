@@ -15,10 +15,21 @@ import net.canarymod.api.world.blocks.Block;
 import net.canarymod.api.world.blocks.BlockType;
 import net.canarymod.api.world.effects.Particle.Type;
 import net.canarymod.api.world.effects.Particle;
+import net.canarymod.hook.player.BlockRightClickHook;
+import net.canarymod.api.inventory.ItemType;
+import net.canarymod.api.inventory.Item;
+import net.canarymod.api.inventory.Inventory;
+import net.canarymod.api.factory.ObjectFactory;
+import net.canarymod.api.factory.ItemFactory;
+import net.canarymod.chat.ChatFormat;
+import net.canarymod.api.inventory.CustomStorageInventory;
+import net.canarymod.hook.player.SlotClickHook;
+import net.canarymod.hook.player.InventoryHook;
 
 public class Spieler extends EZPlugin implements PluginListener{
 	protected static final int maxCards = 18;
 	private Player player;
+	private boolean isInInventory=false; //überrüft on Spieler ein Zauberkarteninventar offen hat
 	//Database
 	private boolean[] found_cards; //Speichert die gefundenen Zauberkarten in Array
 	private HashMap<String, Object> search;
@@ -181,6 +192,101 @@ public class Spieler extends EZPlugin implements PluginListener{
     	logger.info("Spielstand von "+player.getDisplayName()+" wurde angelegt.");
     	this.haveSaveState=true;
     	return true;
+	}
+	//Zeigt Zauberkarten an, falls das Buch im Gemeinschaftsraum geklickt wird
+	@HookHandler
+  	private void clickCardBook(BlockRightClickHook event){
+  		Block cB = event.getBlockClicked();
+  		if(cB.getX()==-344&&cB.getY()==68&&cB.getZ()==306){
+  			showCards();
+  		}
+  	}
+  	//Unterbindet Itemverschiebung im ZauberkartenInventory
+  	@HookHandler
+ 	private void itemklick(SlotClickHook event){
+    	if(isInInventory){
+     		event.setCanceled();
+    	}
+  	}
+  	//Sobald ZauberkartenInventory geschlossen wird, kann man wieder Items verschieben im normalen Inventory
+  	@HookHandler
+  	private void closeinv(InventoryHook event){
+    	if(isInInventory){
+      		if(event.isClosing()){
+        	isInInventory = false;
+      		}
+    	}
+  	}
+  	//Zeigt dem Spieler seine gesammelten Zauberkarten an
+  	private void showCards(){
+  		this.loadSaveState(false);
+  		ObjectFactory factory = Canary.factory().getObjectFactory();
+      	CustomStorageInventory inv = factory.newCustomStorageInventory(ChatFormat.DARK_AQUA + "Zauberkarten", 2);
+      	ItemFactory ifactory = Canary.factory().getItemFactory();
+  		Item[] notFound = cardItems(ItemType.GrayDye, ifactory);
+     	Item[] found = cardItems(ItemType.LimeDye, ifactory);
+      	String[] cardNames = cardNames();
+
+      	for(int i = 0; i < maxCards; i++){
+          	if(this.found_cards[i]){
+            	found[i].setDisplayName(ChatFormat.GREEN + cardNames[i]);
+            	inv.setSlot(i,found[i]);
+          	}else {
+          		notFound[i].setDisplayName(ChatFormat.RED + "Noch nicht entdeckt!");
+          		inv.setSlot(i,notFound[i]);
+        	}
+      	}
+      	this.player.openInventory(inv);
+      	isInInventory=true;
+    }
+  	//Weist jeder Zauberkarte eine farbe zu
+  	private Item[] cardItems(ItemType color, ItemFactory ifactory){
+    	Item[] item = new Item[maxCards];
+    	for(int i = 0; i < maxCards; i++){
+    		item[i] = ifactory.newItem(color);
+    	}
+   		return item;
+  	}
+  	//Weist jeder Zauberkarte einen Namen zu
+	private String[] cardNames(){
+    	String[] cardNames = new String[maxCards];
+    	for(int i = 0; i < maxCards; i++){
+    		if(i<10){
+        		if(i == 0){
+        			cardNames[i] = "Albus Dumbledore";
+      			}
+        		if(i == 1){
+         			cardNames[i] = "s2";
+        		}
+        		if(i == 2){
+          			cardNames[i] = "s3";
+        		}
+        		if(i == 3){
+          			cardNames[i] = "s4";
+        		}
+        		if(i == 4){
+          			cardNames[i] = "s5";
+        		}
+        		if(i == 5){
+          			cardNames[i] = "s6";
+        		}
+        		if(i == 6){
+          			cardNames[i] = "s7";
+        		}
+        		if(i == 7){
+          			cardNames[i] = "s8";
+        		}
+        		if(i == 8){
+          			cardNames[i] = "s9";
+        		}
+        		if(i == 9){
+          			cardNames[i] = "s10";
+        		}
+      		}else {
+        		cardNames[i] = "Coming Soon";
+      		}
+    	}
+    return cardNames;
 	}
 	//Lädt gefundene Zauberkarten
 	private void putBoolsInArrayLoad(){

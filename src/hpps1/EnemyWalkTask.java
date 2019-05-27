@@ -26,6 +26,7 @@ public class EnemyWalkTask extends ServerTask{
     		Snail snail = (Snail)enemy;
     		if(snail.getHealth()>0){
     			Location loc=snail.getEnemyLocation();
+    			//TODO: pattern im stile von snailGoPath(Direction dir, width, length)!
     			BlockType check=loc.getWorld().getBlockAt((int)loc.getX()+1, (int)loc.getY(), (int)loc.getZ()).getType(); //Blockcheck für alle Richtungen 
     			if(check==BlockType.Air || check==BlockType.Mycelium){ 
     				snail.changeEnemy(BlockType.Air);

@@ -26,6 +26,7 @@ public class Snail extends Enemy{
 	}
 	protected void move(Direction dir){
 		Location loc = getEnemyLocation();
+		//SpawnParticle
 		if(dir==Direction.POS_X){
 			this.setEnemyLocation(new Location(loc.getX()+1, loc.getY(), loc.getZ()));
 		}else if(dir==Direction.NEG_X) {
