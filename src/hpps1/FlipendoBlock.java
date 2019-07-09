@@ -1,6 +1,7 @@
 package hpps1;
 import com.pragprog.ahmine.ez.EZPlugin;
 import java.util.ArrayList;
+import java.io.File;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.api.world.blocks.BlockType;
 import net.canarymod.api.entity.living.humanoid.Player;
@@ -25,10 +26,23 @@ public class FlipendoBlock extends EZPlugin implements Spellable{
 	protected static void initFlipendoBlocks(){
 		fBlocks = new ArrayList<>();
 		ArrayList<Location> f1 = new ArrayList<>();
-  		f1.add(new Location(-333, 77, 316));
-  		f1.add(new Location(-332, 76, 317));
-  		f1.add(new Location(-320, 80, 303));
-  		f1.add(new Location(-321, 79, 302));
+		//Lädt Blöcke aus File
+		FileLoader fl = new FileLoader(new File("C:/Users/R/Desktop/MCPlugins/HPPS1/src/files/blocks.txt"));
+		ArrayList<String> s = fl.readFile();
+		//eventuell in FileLoader auslagern
+		if(s!=null){
+			for(String sr : s) {
+				logger.info(sr);
+				String[] parts = sr.split(";");
+				for(int i = 0; i<parts.length; i++) {
+					logger.info("Position "+i+":"+parts[i]);
+				}
+				Location loc1 = new Location(Integer.parseInt(parts[0]),Integer.parseInt(parts[1]), Integer.parseInt(parts[2]));
+				Location loc2 = new Location(Integer.parseInt(parts[3]),Integer.parseInt(parts[4]), Integer.parseInt(parts[5]));
+				f1.add(loc1);
+				f1.add(loc2);
+			}
+		}
   		for(int i=1; i<=f1.size()/2; i++){
   			if(isFb(makeLocList(get2outOfMany(f1, i)))){
   				fBlocks.add(new FlipendoBlock(2, get2outOfMany(f1, i)));
